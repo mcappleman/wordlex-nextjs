@@ -7,26 +7,29 @@ interface iGame {
   guesses: iGuess[]
 }
 
-interface iBoard {
-  id: number
-  status: string
-  codes: iBoardRow[]
-}
-
 interface iGuess {
   id: number
   word: string
+  game_id: number
+  created_at: string
+  updated_at: string
+}
+
+interface iBoard {
+  id: number
+  status: string
+  board_rows: iBoardRow[]
 }
 
 interface iBoardRow {
   id: number
-  codes: iCharCode[]
+  board_cells: iBoardCell[]
 }
 
-interface iCharCode {
+interface iBoardCell {
   id: number
   char: string
   color: string
 }
 
-export type { iGame, iBoard, iBoardRow, iGuess, iCharCode }
+export type { iGame, iBoard, iBoardRow, iBoardCell }

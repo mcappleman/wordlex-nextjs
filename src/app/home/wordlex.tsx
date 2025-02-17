@@ -36,6 +36,10 @@ export default function WordleX({ game, setGame }: WordleXProps) {
     }
   }
 
+  function resetGame() {
+    setGame(null)
+  }
+
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold mb-4">WordleX</h1>
@@ -43,6 +47,21 @@ export default function WordleX({ game, setGame }: WordleXProps) {
         Welcome to WordleX! You are currently playing {game.boards.length}{' '}
         boards.
       </h3>
+      <h3 className="text-xl text-center mb-6">
+        You have {game.max_guesses - game.guesses.length} guesses left.
+      </h3>
+
+      {game.max_guesses - game.guesses.length === 0 && (
+        <>
+          <p className="text-xl text-center mb-6">Game Over!</p>
+          <button
+            onClick={resetGame}
+            className="w-sm px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
+          >
+            Play Again
+          </button>
+        </>
+      )}
       <div className="mb-4">
         {loading && <p>Guessing...</p>}
         {!loading && game.status === 'active' && (

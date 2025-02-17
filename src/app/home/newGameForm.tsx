@@ -13,7 +13,8 @@ export default function NewGameForm({ handleSubmit }: NewGameFormProps) {
       <h3 className="text-xl text-center mb-6">
         WordleX is a word game that is essentially Worlde but you can play
         multiple boards at once. Select the number of boards below and then
-        click the Start Game button below to get started.
+        click the Start Game button below to get started. Your max number of
+        guesses will be the number of boards selected plus 5. Good luck!
       </h3>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="boards">
