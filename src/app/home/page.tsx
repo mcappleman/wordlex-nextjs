@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
   const [game, setGame] = useState<iGame | null>(null)
 
   useEffect(() => {
-    fetch('/api/wordlex?active=true')
+    fetch('/api/wordlex?status=active')
       .then((response) => response.json())
       .then((data) => {
         console.log(data)

@@ -35,15 +35,16 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   const token = (await cookies()).get('token')?.value
   const params = new URL(req.url).searchParams
+  const axiosParams = {
+    headers: {
+      Authorization: token,
+    },
+    params: { ...Object.fromEntries(params) },
+  }
   try {
     const response = await axios.get(
       `${process.env.WORDLEX_API_BASE_URL}/wordles`,
-      {
-        headers: {
-          Authorization: token,
-        },
-        params,
-      }
+      axiosParams
     )
 
     if (response.status === 200) {
