@@ -1,11 +1,14 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export default function Login() {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setLoading(true)
     const data = new FormData(event.currentTarget)
     const email = data.get('email')
     const password = data.get('password')
@@ -21,7 +24,9 @@ export default function Login() {
       const json = await response.json()
       console.log('response', json)
       router.push('/home')
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.error('error', error)
       // show an error message
     }
@@ -49,11 +54,14 @@ export default function Login() {
             />
           </div>
           <div>
-            <input
-              type="submit"
-              value="Submit"
-              className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
-            />
+            {loading && <p>Logging In...</p>}
+            {!loading && (
+              <input
+                type="submit"
+                value="Submit"
+                className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
+              />
+            )}
           </div>
         </form>
         <hr />

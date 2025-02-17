@@ -1,11 +1,14 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setLoading(true)
     const data = new FormData(event.currentTarget)
     const email = data.get('email')
     const first_name = data.get('first_name')
@@ -26,11 +29,14 @@ export default function RegisterPage() {
           'Content-Type': 'application/json',
         },
       })
+      setLoading(false)
       const json = await response.json()
       console.log('response', json)
       router.push('/home')
     } catch (error) {
+      setLoading(false)
       console.error('error', error)
+      return
       // show an error message
     }
   }
@@ -104,11 +110,14 @@ export default function RegisterPage() {
           />
         </div>
         <div className="flex items-center justify-between">
-          <input
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-            value="Register"
-          />
+          {loading && <p>Registering...</p>}
+          {!loading && (
+            <input
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+              value="Register"
+            />
+          )}
         </div>
       </form>
     </div>
