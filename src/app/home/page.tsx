@@ -25,6 +25,7 @@ const HomePage: React.FC = () => {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault()
+    setLoading(true)
     const data = new FormData(event.currentTarget)
     const num_of_boards = data.get('boards')
 
@@ -43,6 +44,7 @@ const HomePage: React.FC = () => {
     } catch (error) {
       console.error('error', error)
     }
+    setLoading(false)
   }
 
   return (

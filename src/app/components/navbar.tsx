@@ -15,7 +15,7 @@ export default function NavBar() {
           <Link href="/profile" className="text-white">
             Profile
           </Link>
-          <Link href="/logout" className="text-white">
+          <Link href="/" className="text-white">
             Logout
           </Link>
         </nav>

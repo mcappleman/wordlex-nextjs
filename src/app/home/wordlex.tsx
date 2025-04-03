@@ -1,6 +1,7 @@
 import { iGame, iBoard } from '../types/game'
 import React, { useState } from 'react'
 import Board from './board'
+import PlayAgainButton from './playAgainButton'
 
 interface WordleXProps {
   game: iGame
@@ -51,17 +52,19 @@ export default function WordleX({ game, setGame }: WordleXProps) {
         You have {game.max_guesses - game.guesses.length} guesses left.
       </h3>
 
-      {game.max_guesses - game.guesses.length === 0 && (
+      {game.status === 'failed' && (
         <>
           <p className="text-xl text-center mb-6">Game Over!</p>
-          <button
-            onClick={resetGame}
-            className="w-sm px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
-          >
-            Play Again
-          </button>
+          <PlayAgainButton resetGame={resetGame} />
         </>
       )}
+      {game.status === 'completed' &&
+        game.max_guesses - game.guesses.length > 0 && (
+          <>
+            <p className="text-xl text-center mb-6">You Won!</p>
+            <PlayAgainButton resetGame={resetGame} />
+          </>
+        )}
       <div className="mb-4">
         {loading && <p>Guessing...</p>}
         {!loading && game.status === 'active' && (
@@ -76,6 +79,7 @@ export default function WordleX({ game, setGame }: WordleXProps) {
                 name="guess"
                 className="py-3 px-4 block w-full border-gray-200 shadow-sm rounded-s-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 placeholder="Guess"
+                autoFocus
               />
               <button
                 type="submit"

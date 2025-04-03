@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 
 const publicRoutes = ['/', '/register']
-const privateRoutes = ['/home']
+const privateRoutes = ['/home', '/profile', 'history']
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
@@ -10,9 +10,7 @@ export default async function middleware(req: NextRequest) {
   const isPublic = publicRoutes.includes(path)
 
   const cookie = (await cookies()).get('token')?.value
-  console.log(JSON.stringify(cookie))
 
-  console.log('middleware', req.url)
   if (isPrivate && !cookie) {
     return NextResponse.redirect(new URL('/', req.nextUrl))
   }
