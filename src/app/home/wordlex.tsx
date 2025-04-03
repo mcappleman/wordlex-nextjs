@@ -58,13 +58,12 @@ export default function WordleX({ game, setGame }: WordleXProps) {
           <PlayAgainButton resetGame={resetGame} />
         </>
       )}
-      {game.status === 'completed' &&
-        game.max_guesses - game.guesses.length > 0 && (
-          <>
-            <p className="text-xl text-center mb-6">You Won!</p>
-            <PlayAgainButton resetGame={resetGame} />
-          </>
-        )}
+      {game.status === 'completed' && (
+        <>
+          <p className="text-xl text-center mb-6">You Won!</p>
+          <PlayAgainButton resetGame={resetGame} />
+        </>
+      )}
       <div className="mb-4">
         {loading && <p>Guessing...</p>}
         {!loading && game.status === 'active' && (
